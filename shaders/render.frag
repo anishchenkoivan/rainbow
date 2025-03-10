@@ -25,7 +25,7 @@ struct Node {
     bool blocked;
 };
 
-layout (LAYOUT, binding = 0) buffer NodeBuffer {
+layout(LAYOUT, binding = 0) buffer NodeBuffer {
     Node nodes[];
 };
 
@@ -76,12 +76,14 @@ void step(float delta_t, ivec2 coords) {
 }
 
 void main() {
-//    fragCoord -= resolution / 2;
-//    float d = max(resolution.x, resolution.y);
-//    vec2 uv = fragCoord / d;
-//    vec2 uv = fragCoord / vec2(resolution);
+    //    fragCoord -= resolution / 2;
+    //    float d = max(resolution.x, resolution.y);
+    //    vec2 uv = fragCoord / d;
+    //    vec2 uv = fragCoord / vec2(resolution);
     vec2 uv = gl_FragCoord.xy / vec2(resolution);
-    step(1.0/60, ivec2(uv * resolution));
+    for (int i = 0; i < 60; ++i) {
+        step(1.0 / 60, ivec2(uv * resolution));
+    }
     float tempColor = getColor(ivec2(uv * resolution));
     color = vec4(tempColor, tempColor, tempColor, 1);
 }
