@@ -72,15 +72,16 @@ class GraphicalPrimitive(LoadableObject):
 
 
 class Node(GraphicalPrimitive):
-    def __init__(self, weight: float, height: float, velocity: float):
+    def __init__(self, weight: float, height: float, velocity: float, blocked: bool):
         super().__init__()
         self.weight = weight
         self.height = height
         self.velocity = velocity
+        self.blocked = blocked
 
     @typing.override
     def as_array(self):
-        return [self.weight, self.height, self.velocity]
+        return [self.weight, self.height, self.velocity, self.blocked]
 
 
 class SceneLoader(LogicProvider):

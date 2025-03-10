@@ -22,6 +22,7 @@ struct Node {
     float weight;
     float height;
     float velocity;
+    bool blocked;
 };
 
 layout (LAYOUT, binding = 0) buffer NodeBuffer {
@@ -42,6 +43,9 @@ float getColor(ivec2 coords) {
 
 void step(float delta_t, ivec2 coords) {
     int i = index1d(coords);
+    if (nodes[i].blocked) {
+        return;
+    }
     float sumHeight = 0;
     int counter = 0;
     if (coords.x > 0) {
