@@ -2,7 +2,6 @@
 out vec4 color;
 
 uniform ivec2 resolution;
-uniform ivec2 physicalResolution;
 uniform samplerCube skybox;
 
 vec2 fragCoord = gl_FragCoord.xy;
@@ -30,12 +29,11 @@ int index1d(ivec2 coords) {
 }
 
 ivec2 index2d(int i) {
-    return ivec2(i % physicalResolution.x, i / physicalResolution.x);
+    return ivec2(i % resolution.x, i / resolution.x);
 }
 
-float getColor(ivec2 screenCoords) {
-    ivec2 physicalCoords = ivec2(physicalResolution * (1.0 * screenCoords / resolution));
-    return abs(nodes[index1d(physicalCoords)].height);
+float getColor(ivec2 coords) {
+    return abs(nodes[index1d(coords)].height);
 }
 
 void step(float delta_t) {
