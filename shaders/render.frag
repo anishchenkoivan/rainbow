@@ -7,7 +7,7 @@ uniform samplerCube skybox;
 vec2 fragCoord = gl_FragCoord.xy;
 
 #define SPRING_COEFFICIENT 0.1
-#define ENERGY_SAVING 0.99
+#define ENERGY_SAVING 1.0
 
 #define INFTY 1E9
 #define EPS   1E-3
@@ -64,7 +64,7 @@ void step(float delta_t, ivec2 coords) {
     float averageHeight = sumHeight / counter;
     float acceleration = (averageHeight - nodes[i].height) * SPRING_COEFFICIENT;
 
-    nodes[i].velocity = acceleration * (1 / nodes[i].weight) * delta_t;
+    nodes[i].velocity += acceleration * (1.0 / nodes[i].weight) * delta_t;
 
     nodes[i].velocity *= ENERGY_SAVING;
 
@@ -72,10 +72,12 @@ void step(float delta_t, ivec2 coords) {
 }
 
 void main() {
-    fragCoord -= resolution / 2;
-    float d = max(resolution.x, resolution.y);
-    vec2 uv = fragCoord / d;
-    step(1/60, ivec2(uv * resolution));
+//    fragCoord -= resolution / 2;
+//    float d = max(resolution.x, resolution.y);
+//    vec2 uv = fragCoord / d;
+//    vec2 uv = fragCoord / vec2(resolution);
+    vec2 uv = gl_FragCoord.xy / vec2(resolution);
+    step(1.0/60, ivec2(uv * resolution));
     float tempColor = getColor(ivec2(uv * resolution));
     color = vec4(tempColor, tempColor, tempColor, 1);
 }

@@ -9,4 +9,4 @@ class ExampleSceneLoader(SceneLoader):
     @typing.override
     def spawn_nodes(self):
         amount = config.RESOLUTION[0] * config.RESOLUTION[1]
-        return [Node(1, i / amount) for i in range(amount)]
+        return [Node(1, i / amount, 0) for i in range(amount)]
