@@ -6,6 +6,7 @@ from pyglm import glm
 from struct import pack, unpack
 
 from buffers import Buffers
+import config
 
 
 class Converter:
@@ -72,14 +73,16 @@ class GraphicalPrimitive(LoadableObject):
 
 
 class Node(GraphicalPrimitive):
-    def __init__(self, weight: float, height: float):
+    def __init__(self, weight: float, height: float, velocity: float, blocked: bool):
         super().__init__()
         self.weight = weight
         self.height = height
+        self.velocity = velocity
+        self.blocked = blocked
 
     @typing.override
     def as_array(self):
-        return [self.weight, self.height]
+        return [self.weight, self.height, self.velocity, self.blocked]
 
 
 class SceneLoader(LogicProvider):
@@ -113,7 +116,16 @@ class SceneLoader(LogicProvider):
         glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, ssbo)
 
     def spawn_nodes(self):
-        return glm.array(glm.float32)
+       amount = config.RESOLUTION[0] * config.RESOLUTION[1]
+       nodes = []
+       for i in range(amount):
+            x = i % config.RESOLUTION[0]
+            y = i // config.RESOLUTION[0]
+            nodes.append(self.get_node(x, y))
+       return nodes
+
+    def get_node(self, x, y):
+        raise NotImplementedError()
 
     @staticmethod
     def to_glm_array(data: list[LoadableObject]):

@@ -36,7 +36,6 @@ class DefaultLogicProvider(LogicProvider):
     def render(self):
         self.scene_loader.render()
         glUniform2i(glGetUniformLocation(self.shader.program, "resolution"), config.RESOLUTION[0], config.RESOLUTION[1])
-        glUniform2i(glGetUniformLocation(self.shader.program, "physicalResolution"), config.PHYSICAL_RESOLUTION[0], config.PHYSICAL_RESOLUTION[1])
 
 
 class VerticesMesh(Mesh):
