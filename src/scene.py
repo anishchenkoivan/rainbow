@@ -5,7 +5,7 @@ from OpenGL.GL import *
 from pyglm import glm
 from struct import pack, unpack
 
-from src.buffers import Buffers
+from buffers import Buffers
 
 
 class Converter:
