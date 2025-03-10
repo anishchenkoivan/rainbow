@@ -3,4 +3,4 @@ import demo
 
 
 if __name__ == "__main__":
-    shader.main(demo.ExampleSceneLoader)
+    shader.main(demo.MultipleSlitsDiffractionSceneLoader)
